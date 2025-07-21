@@ -5,7 +5,12 @@ import { getUserById } from '../mock/users';
 
 const SupportChatScreen = ({ currentUser, onBack }) => {
   const supportAgentId = 999; // ID ficticio para el agente de soporte
-  const supportAgent = { id: supportAgentId, name: "Soporte Técnico", profilePhoto: "https://via.placeholder.com/50/0000FF/FFFFFF?text=ST" };
+  const supportAgent = {
+    id: supportAgentId,
+    name: "Soporte Técnico",
+    profilePhoto: "https://via.placeholder.com/50/0000FF/FFFFFF?text=ST"
+  };
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
@@ -24,7 +29,7 @@ const SupportChatScreen = ({ currentUser, onBack }) => {
       } else {
         greeting = "Buenas noches";
       }
-      
+
       const initialSupportMessage = {
         id: Date.now(),
         senderId: supportAgentId,
@@ -56,7 +61,6 @@ const SupportChatScreen = ({ currentUser, onBack }) => {
       setMessages(prev => [...prev, userMessage]);
       setNewMessage('');
 
-      // Auto-reply from support
       setTimeout(() => {
         const autoReply = {
           id: Date.now() + 1,
@@ -81,12 +85,14 @@ const SupportChatScreen = ({ currentUser, onBack }) => {
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map(msg => (
-          <div 
-            key={msg.id} 
+          <div
+            key={msg.id}
             className={`flex ${msg.senderId === currentUser.id ? 'justify-end' : 'justify-start'}`}
           >
             <div className={`max-w-[70%] p-3 rounded-lg shadow-md ${
-              msg.senderId === currentUser.id ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-800'
+              msg.senderId === currentUser.id
+                ? 'bg-orange-500 text-white'
+                : 'bg-gray-200 text-gray-800'
             }`}>
               <p>{msg.text}</p>
               <span className="text-xs opacity-75 mt-1 block text-right">
